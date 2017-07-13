@@ -530,7 +530,7 @@ class JIRA(object):
         :param value: value to assign to the property
         """
         url = self._options['server'] + \
-            '/rest/api/latest/application-properties/' + key
+            '/rest/Servicedeskapi/latest/application-properties/' + key
         payload = {
             'id': key,
             'value': value}
@@ -837,7 +837,7 @@ class JIRA(object):
         :param groupname: The name of the group you wish to create.
         :return: Boolean - True if succesfull.
         """
-        url = self._options['server'] + '/rest/api/latest/group'
+        url = self._options['server'] + '/rest/Servicedeskapi/latest/group'
 
         # implementation based on
         # https://docs.atlassian.com/jira/REST/ondemand/#d2e5173
@@ -860,7 +860,7 @@ class JIRA(object):
         """
         # implementation based on
         # https://docs.atlassian.com/jira/REST/ondemand/#d2e5173
-        url = self._options['server'] + '/rest/api/latest/group'
+        url = self._options['server'] + '/rest/Servicedeskapi/latest/group'
         x = {'groupname': groupname}
         self._session.delete(url, params=x)
         return True
@@ -1111,7 +1111,7 @@ class JIRA(object):
         :param assignee: the user to assign the issue to
         """
         url = self._options['server'] + \
-            '/rest/api/latest/issue/' + str(issue) + '/assignee'
+            '/rest/Servicedeskapi/latest/issue/' + str(issue) + '/assignee'
         payload = {'name': assignee}
         r = self._session.put(
             url, data=json.dumps(payload))
@@ -1502,7 +1502,7 @@ class JIRA(object):
             data['started'] = started.strftime("%Y-%m-%dT%H:%M:%S.000%z")
         if user is not None:
             data['author'] = {"name": user,
-                              'self': self.JIRA_BASE_URL + '/rest/api/latest/user?username=' + user,
+                              'self': self.JIRA_BASE_URL + '/rest/Servicedeskapi/latest/user?username=' + user,
                               'displayName': user,
                               'active': False
                               }
@@ -2397,7 +2397,7 @@ class JIRA(object):
         """
         if self._version >= (6, 0, 0):
 
-            url = self._options['server'] + '/rest/api/latest/user'
+            url = self._options['server'] + '/rest/Servicedeskapi/latest/user'
             payload = {
                 "name": new_user}
             params = {
@@ -2474,7 +2474,7 @@ class JIRA(object):
 
     def delete_user(self, username):
 
-        url = self._options['server'] + '/rest/api/latest/user/?username=%s' % username
+        url = self._options['server'] + '/rest/Servicedeskapi/latest/user/?username=%s' % username
 
         r = self._session.delete(url)
         if 200 <= r.status_code <= 299:
@@ -2683,7 +2683,7 @@ class JIRA(object):
                 raise ValueError('Parameter pid="%s" is not a Project, '
                                  'projectID or slug' % pid)
 
-        uri = '/rest/api/2/project/%s' % pid
+        uri = '/rest/Servicedeskapi/2/project/%s' % pid
         url = self._options['server'] + uri
         try:
             r = self._session.delete(
@@ -2805,7 +2805,7 @@ class JIRA(object):
             fullname = username
         # TODO(ssbarnea): default the directoryID to the first directory in jira instead
         # of 1 which is the internal one.
-        url = self._options['server'] + '/rest/api/latest/user'
+        url = self._options['server'] + '/rest/Servicedeskapi/latest/user'
 
         # implementation based on
         # https://docs.atlassian.com/jira/REST/ondemand/#d2e5173
@@ -2836,7 +2836,7 @@ class JIRA(object):
         :param group: Group that the user will be added to.
         :return: json response from Jira server for success or a value that evaluates as False in case of failure.
         """
-        url = self._options['server'] + '/rest/api/latest/group/user'
+        url = self._options['server'] + '/rest/Servicedeskapi/latest/group/user'
         x = {'groupname': group}
         y = {'name': username}
 
@@ -2854,7 +2854,7 @@ class JIRA(object):
         :param username: The user to remove from the group.
         :param groupname: The group that the user will be removed from.
         """
-        url = self._options['server'] + '/rest/api/latest/group/user'
+        url = self._options['server'] + '/rest/Servicedeskapi/latest/group/user'
         x = {'groupname': groupname,
              'username': username}
 
